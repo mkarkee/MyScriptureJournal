@@ -1,0 +1,73 @@
+﻿@page
+@model MyScriptureJournal.Pages.Journals.IndexModel
+
+@{
+    ViewData["Title"] = "Journals";
+}
+
+<h1>Journals</h1>
+
+
+<form>
+
+    <div class="input-group">
+        <select class="selectpicker btn-outline-primary" data-style="btn-primary" asp-for="SearchType">
+            <option>Book</option>
+            <option>Keyword</option>
+        </select>
+
+        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" asp-for="SearchString" />
+        <button type="submit" class="btn btn-outline-primary">search</button>
+    </div>
+
+</form>
+<table class="table" class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+        <tr>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortByBook">
+                @Html.DisplayNameFor(model => model.Journal[0].BookName)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Journal[0].ChapterVerse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Journal[0].Notes)
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortByDate">
+                @Html.DisplayNameFor(model => model.Journal[0].EntryDate)
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Journal) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChapterVerse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EntryDate)
+            </td>
+            <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ID"><button type="button" class="btn btn-primary">Edit</button></a>
+                    <a asp-page="./Details" asp-route-id="@item.ID"><button type="button" class="btn btn-primary">Details</button></a>
+                    <a asp-page="./Delete" asp-route-id="@item.ID"><button type="button" class="btn btn-danger">Delete</button></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<p>
+    <a asp-page="Create" style="background-color=" red"><button class="btn btn-primary"> Add New Journal</button></a>
+</p>
